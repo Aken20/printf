@@ -6,7 +6,7 @@
 /*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/10 07:11:04 by ahibrahi          #+#    #+#             */
-/*   Updated: 2023/09/12 16:06:39 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2023/09/12 20:35:42 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,24 @@ int	ft_printf(const char *type, ...)
 					p++;
 					i++;
 				}
+				else if (type[i] == 'p')
+				{
+					c += ft_p(va_arg (args, unsigned long long));
+					p++;
+					i++;
+				}
+				else if (type[i] == 'x')
+				{
+					c = ft_hex(va_arg (args, unsigned long long), c);
+					p++;
+					i++;
+				}
+				else if (type[i] == 'X')
+				{
+					c = ft_hexb(va_arg (args, unsigned long long), c);
+					p++;
+					i++;
+				}
 				else if (type[i] == '%')
 				{
 					write (1, "%", 1);
@@ -60,23 +78,25 @@ int	ft_printf(const char *type, ...)
 				}
 			}
 			else 
-				write (1, &type[i++], 1);
+			{
+				write (1, &type[i], 1);
+				i++;
+			}
 		}
-		--i;
 	}
 	va_end (args);
-	return ((i + c) - p + 1);
+	return ((i + c) - p);
 }
 
-// int	main(void)
-// {
-// 	char	*s;
-// 	int		i;
+int	main(void)
+{
+	char	*s;
+	int		i;
 
-// 	s = 0;
-// 	i = printf(" %u  %u %u", 0, -16, 10);
-// 	printf("\n%i\n", i);
-// 	i = ft_printf(" %u  %u %u", 0, -16, 10);
-// 	printf("\n%i\n", i);
-// 	return (0);
-// }
+	s = "pip";
+	i = printf("%x%xx%x", 1, 2, -3);
+	printf("\n%i\n", i);
+	i = ft_printf("%x%xx%x", 1, 2, -3);
+	printf("\n%i\n", i);
+	return (0);
+}
