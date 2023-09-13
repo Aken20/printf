@@ -12,6 +12,33 @@
 
 #include "ft_printf.h"
 
+static int ft_pset(const char *type, void a)
+{
+	if (type[i] == 'i' || type[i] == 'd')
+		c += ft_putnbr((int)(a));
+	else if (type[i] == 'u')
+		c += ft_u((unsigned int)(a));
+	else if (type[i] == 'c')
+	{
+		ft_putchar((int)(a));
+		c++;
+	}
+	else if (type[i] == 's')
+		c += ft_putstr((char *)(a));
+	else if (type[i] == 'p')
+		c += ft_p((unsigned long long)(a));
+	else if (type[i] == 'x')
+		c = ft_hex((unsigned long long)(a), c);
+	else if (type[i] == 'X')
+		c = ft_hexb((unsigned long long)(a), c);
+	else if (type[i] == '%')
+	{
+		write (1, "%", 1);
+		i++;
+	}
+	return (c);
+}
+
 int	ft_printf(const char *type, ...)
 {
 	va_list	args;
@@ -30,52 +57,7 @@ int	ft_printf(const char *type, ...)
 			{
 				p++;
 				i++;
-				if (type[i] == 'i' || type[i] == 'd')
-				{
-					c += ft_putnbr(va_arg (args, int));
-					i++;
-					p++;
-				}
-				else if (type[i] == 'u')
-				{
-					c += ft_u(va_arg (args, unsigned int));
-					i++;
-					p++;
-				}
-				else if (type[i] == 'c')
-				{
-					ft_putchar(va_arg (args, int));
-					i++;
-				}
-				else if (type[i] == 's')
-				{
-					c += ft_putstr(va_arg (args, char *));
-					p++;
-					i++;
-				}
-				else if (type[i] == 'p')
-				{
-					c += ft_p(va_arg (args, unsigned long long));
-					p++;
-					i++;
-				}
-				else if (type[i] == 'x')
-				{
-					c = ft_hex(va_arg (args, unsigned long long), c);
-					p++;
-					i++;
-				}
-				else if (type[i] == 'X')
-				{
-					c = ft_hexb(va_arg (args, unsigned long long), c);
-					p++;
-					i++;
-				}
-				else if (type[i] == '%')
-				{
-					write (1, "%", 1);
-					i++;
-				}
+				ft_pset(type[i], va_arg(args, (void)))
 			}
 			else 
 			{
