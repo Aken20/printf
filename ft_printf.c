@@ -12,25 +12,25 @@
 
 #include "ft_printf.h"
 
-static int	ft_pset(const char type, unsigned long long a)
+static int	ft_pset(const char type, va_list(args))
 {
 	int		c;
 
 	c = 0;
 	if (type == 'i' || type == 'd')
-		c = ft_putnbr((int)(a));
+		c = ft_putnbr(va_arg(args, int));
 	else if (type == 'u')
-		c = ft_u((unsigned int)(a));
+		c = ft_u(va_arg(args, unsigned int));
 	else if (type == 'c')
-		c = ft_putchar((int)(a));
+		c = ft_putchar(va_arg(args, int));
 	else if (type == 's')
-		c = ft_putstr((char *)(a));
+		c = ft_putstr(va_arg(args, char *));
 	else if (type == 'p')
-		c = ft_p((unsigned long long)(a));
+		c = ft_p(va_arg(args, unsigned long long));
 	else if (type == 'x')
-		c += ft_hex((unsigned int)(a));
+		c += ft_hex(va_arg(args, unsigned int));
 	else if (type == 'X')
-		c += ft_hexb((unsigned int)(a));
+		c += ft_hexb(va_arg(args, unsigned int));
 	else if (type == '%')
 		c += write (1, "%", 1);
 	return (c);
@@ -53,25 +53,24 @@ int	ft_printf(const char *type, ...)
 			if (type[i] == '%')
 			{
 				i++;
-				c += ft_pset(type[i++], va_arg(args, unsigned long long));
+					c += ft_pset(type[i], args);
 			}
 			else 
-				c += write (1, &type[i++], 1);
+				c += write (1, &type[i], 1);
+			i++;
 		}
 	}
 	va_end (args);
 	return (c);
 }
 
-// int	main(void)
-// {
-// 	char	*s;
-// 	int		i;
+int	main(void)
+{
+	int		i;
 
-// 	s = "pip";
-// 	i = printf(" %%%x ", 767);
-// 	printf("\n%i\n", i);
-// 	i = ft_printf(" %%%x ", 767);
-// 	printf("\n%i\n", i);
-// 	return (0);
-// }
+	i = printf(" %%%c %%%c %%%c ", 49, 50, 51);
+	printf("\n%i\n", i);
+	i = ft_printf(" %%%c %%%c %%%c ", 49, 50, 51);
+	printf("\n%i\n", i);
+	return (0);
+}
