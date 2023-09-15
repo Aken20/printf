@@ -6,7 +6,7 @@
 /*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/10 07:13:36 by ahibrahi          #+#    #+#             */
-/*   Updated: 2023/09/12 20:00:03 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2023/09/15 06:15:49 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 
 # include <unistd.h>
 # include <stdlib.h>
-# include <string.h>
 # include <stdarg.h>
 # include <stdio.h>
+#include <limits.h>
 
 int		ft_printf(const char *type, ...);
 int		ft_putchar(char c);
@@ -26,7 +26,7 @@ int		ft_putnbr(int n);
 int		ft_u(unsigned int n);
 int		ft_itoa(long long n);
 int		ft_p(unsigned long long p);
-int		ft_hex(unsigned long long x, int i);
-int		ft_hexb(unsigned long long x, int i);
+int		ft_hex(unsigned int x);
+int		ft_hexb(unsigned int x);
 
 #endif

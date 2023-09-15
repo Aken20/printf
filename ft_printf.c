@@ -12,30 +12,27 @@
 
 #include "ft_printf.h"
 
-static int ft_pset(const char *type, void a)
+static int	ft_pset(const char type, unsigned long long a)
 {
-	if (type[i] == 'i' || type[i] == 'd')
-		c += ft_putnbr((int)(a));
-	else if (type[i] == 'u')
-		c += ft_u((unsigned int)(a));
-	else if (type[i] == 'c')
-	{
-		ft_putchar((int)(a));
-		c++;
-	}
-	else if (type[i] == 's')
-		c += ft_putstr((char *)(a));
-	else if (type[i] == 'p')
-		c += ft_p((unsigned long long)(a));
-	else if (type[i] == 'x')
-		c = ft_hex((unsigned long long)(a), c);
-	else if (type[i] == 'X')
-		c = ft_hexb((unsigned long long)(a), c);
-	else if (type[i] == '%')
-	{
-		write (1, "%", 1);
-		i++;
-	}
+	int		c;
+
+	c = 0;
+	if (type == 'i' || type == 'd')
+		c = ft_putnbr((int)(a));
+	else if (type == 'u')
+		c = ft_u((unsigned int)(a));
+	else if (type == 'c')
+		c = ft_putchar((int)(a));
+	else if (type == 's')
+		c = ft_putstr((char *)(a));
+	else if (type == 'p')
+		c = ft_p((unsigned long long)(a));
+	else if (type == 'x')
+		c += ft_hex((unsigned int)(a));
+	else if (type == 'X')
+		c += ft_hexb((unsigned int)(a));
+	else if (type == '%')
+		c += write (1, "%", 1);
 	return (c);
 }
 
@@ -44,41 +41,37 @@ int	ft_printf(const char *type, ...)
 	va_list	args;
 	int		i;
 	int		c;
-	int		p;
 
-	p = 0;
 	c = 0;
 	i = 0;
+	if (!type)
+		return (0);
 	va_start (args, type);
 	{
 		while (type[i])
 		{
 			if (type[i] == '%')
 			{
-				p++;
 				i++;
-				ft_pset(type[i], va_arg(args, (void)))
+				c += ft_pset(type[i++], va_arg(args, unsigned long long));
 			}
 			else 
-			{
-				write (1, &type[i], 1);
-				i++;
-			}
+				c += write (1, &type[i++], 1);
 		}
 	}
 	va_end (args);
-	return ((i + c) - p);
+	return (c);
 }
 
-int	main(void)
-{
-	char	*s;
-	int		i;
+// int	main(void)
+// {
+// 	char	*s;
+// 	int		i;
 
-	s = "pip";
-	i = printf("%x%xx%x", 1, 2, -3);
-	printf("\n%i\n", i);
-	i = ft_printf("%x%xx%x", 1, 2, -3);
-	printf("\n%i\n", i);
-	return (0);
-}
+// 	s = "pip";
+// 	i = printf(" %%%x ", 767);
+// 	printf("\n%i\n", i);
+// 	i = ft_printf(" %%%x ", 767);
+// 	printf("\n%i\n", i);
+// 	return (0);
+// }
