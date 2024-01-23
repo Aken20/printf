@@ -42,7 +42,7 @@ static	void	ft_set(int n, int len)
 	{
 		l = n / k;
 		if (n > 10)
-			c = (l % k) + 48; 
+			c = (l % k) + 48;
 		else
 			c = l + 48;
 		write(1, &c, 1);
