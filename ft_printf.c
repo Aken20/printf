@@ -20,13 +20,13 @@ static int	ft_pset(const char type, va_list(args))
 	if (type == 'i' || type == 'd')
 		c = ft_putnbr(va_arg(args, int));
 	else if (type == 'u')
-		c = ft_u(va_arg(args, unsigned int));
+		c = ft_unsinged(va_arg(args, unsigned int));
 	else if (type == 'c')
 		c = ft_putchar(va_arg(args, int));
 	else if (type == 's')
 		c = ft_putstr(va_arg(args, char *));
 	else if (type == 'p')
-		c = ft_p(va_arg(args, unsigned long long));
+		c = ft_pointer(va_arg(args, unsigned long long));
 	else if (type == 'x')
 		c += ft_hex(va_arg(args, unsigned int));
 	else if (type == 'X')
@@ -53,24 +53,13 @@ int	ft_printf(const char *type, ...)
 			if (type[i] == '%')
 			{
 				i++;
-					c += ft_pset(type[i], args);
+				c += ft_pset(type[i], args);
 			}
-			else 
+			else
 				c += write (1, &type[i], 1);
 			i++;
 		}
 	}
 	va_end (args);
 	return (c);
-}
-
-int	main(void)
-{
-	int		i;
-
-	i = printf(" %%%c %%%c %%%c ", 49, 50, 51);
-	printf("\n%i\n", i);
-	i = ft_printf(" %%%c %%%c %%%c ", 49, 50, 51);
-	printf("\n%i\n", i);
-	return (0);
 }
